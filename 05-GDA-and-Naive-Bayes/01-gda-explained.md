@@ -1,1 +1,1 @@
-
+Gaussian Discriminant Analysis
