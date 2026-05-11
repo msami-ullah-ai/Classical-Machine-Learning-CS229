@@ -4,7 +4,6 @@ Stochastic Gradient Descent From Scratch
 Unlike Batch Gradient Descent,
 SGD updates parameters using ONE example at a time.
 
-Author: Sami Ullah
 """
 
 import numpy as np
