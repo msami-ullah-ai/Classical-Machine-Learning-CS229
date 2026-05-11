@@ -4,7 +4,6 @@ Batch Gradient Descent Implementation
 This script demonstrates how Batch Gradient Descent
 updates parameters using the ENTIRE dataset.
 
-Author: Sami Ullah
 """
 
 import numpy as np
