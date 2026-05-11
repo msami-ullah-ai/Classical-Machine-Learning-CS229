@@ -8,7 +8,6 @@ Formula:
 
 theta = (X^T X)^(-1) X^T y
 
-Author: Sami Ullah
 """
 
 import numpy as np
