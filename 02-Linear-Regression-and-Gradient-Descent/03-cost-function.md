@@ -1,12 +1,16 @@
-# Cost Function in Linear Regression
+# Cost Function
 
 ## Why Do We Need a Cost Function?
 
 The hypothesis function makes predictions.
 
-But how do we know whether the predictions are good or bad?
+But predictions alone are not enough.
 
-We need a way to measure prediction error.
+We need a way to measure:
+
+- how wrong the model is,
+- how far predictions are from actual values,
+- whether the model is improving during training.
 
 That measurement is called the **cost function**.
 
@@ -14,31 +18,29 @@ That measurement is called the **cost function**.
 
 ## Goal of the Cost Function
 
-The cost function tells us:
+The cost function evaluates model performance.
 
-- how wrong the model is,
-- how far predictions are from actual values.
+- small cost = good predictions
+- large cost = poor predictions
 
-Small cost:
-- good model fit
-
-Large cost:
-- poor model fit
+The learning algorithm tries to minimize this cost.
 
 ---
 
 ## Squared Error Cost Function
 
-Linear Regression commonly uses Mean Squared Error (MSE).
+Linear Regression commonly uses **Mean Squared Error (MSE)**.
 
-:contentReference[oaicite:3]{index=3}
+$$
+J(\theta)=\frac{1}{2m}\sum_{i=1}^{m}(h_\theta(x^{(i)})-y^{(i)})^2
+$$
 
 Where:
 
-- \(J(\theta)\) = cost function
-- \(m\) = number of training examples
-- \(h_\theta(x^{(i)})\) = prediction
-- \(y^{(i)}\) = actual value
+- $J(\theta)$ = cost function
+- $m$ = number of training examples
+- $h_\theta(x^{(i)})$ = predicted value
+- $y^{(i)}$ = actual value
 
 ---
 
@@ -46,24 +48,34 @@ Where:
 
 Prediction error:
 
-\[
+$$
 h_\theta(x^{(i)}) - y^{(i)}
-\]
+$$
 
-If prediction equals actual value:
-- error = 0
+This tells us how far the prediction is from the true value.
 
-Otherwise:
-- error increases.
+### If prediction equals actual value:
+
+$$
+h_\theta(x^{(i)}) = y^{(i)}
+$$
+
+then:
+
+$$
+\text{error} = 0
+$$
+
+which means perfect prediction.
 
 ---
 
-## Why Squared Error?
+## Why Do We Square Errors?
 
 We square errors because:
 
-- negative and positive errors should not cancel,
-- larger mistakes should be penalized more heavily.
+- positive and negative errors should not cancel each other,
+- large mistakes should be penalized more heavily.
 
 Example:
 
@@ -72,15 +84,21 @@ Example:
 | 2 | 4 |
 | 10 | 100 |
 
-Large mistakes become much more expensive.
+A larger error becomes significantly more expensive.
+
+This forces the model to avoid large mistakes.
 
 ---
 
-## Why Divide by \(m\)?
+## Why Divide by $m$?
 
-We divide by \(m\) to compute the **average error** across all training examples.
+We divide by $m$ to compute the **average error** across all training examples.
 
-This makes the cost independent of dataset size.
+Without averaging:
+
+- larger datasets would automatically produce larger costs.
+
+Averaging makes the cost independent of dataset size.
 
 ---
 
@@ -88,13 +106,38 @@ This makes the cost independent of dataset size.
 
 The factor:
 
-\[
+$$
 \frac{1}{2}
-\]
+$$
 
 is added for mathematical convenience.
 
-It cancels out nicely during differentiation.
+During differentiation:
+
+- the exponent 2 cancels with $\frac{1}{2}$,
+- making equations cleaner.
+
+---
+
+## Relationship Between Parameters and Cost
+
+Different parameter values produce different prediction errors.
+
+Good parameters:
+- low cost
+
+Bad parameters:
+- high cost
+
+The objective of training is:
+
+$$
+\arg\min_{\theta} J(\theta)
+$$
+
+which means:
+
+> find parameter values that minimize the cost function.
 
 ---
 
@@ -109,7 +152,7 @@ A convex function has:
 - only one global minimum,
 - no local minima traps.
 
-That means optimization becomes easier.
+That means optimization becomes easier and more reliable.
 
 ---
 
@@ -118,54 +161,78 @@ That means optimization becomes easier.
 Imagine placing a ball inside a bowl.
 
 No matter where the ball starts:
+
 - it eventually rolls toward the lowest point.
 
-Gradient Descent behaves similarly.
+Gradient Descent behaves similarly while minimizing the cost function.
 
 ---
 
-## Relationship Between Parameters and Cost
+## Contour Representation
 
-Different parameter values produce different prediction errors.
+Contour lines connect points having the same cost.
 
-Good parameters:
-- low cost
+- outer contours = higher error
+- inner contours = lower error
 
-Bad parameters:
-- high cost
+The center represents the minimum cost.
 
-The objective is:
+Gradient Descent moves from outer contours toward the center.
 
-\[
-\arg \min_\theta J(\theta)
-\]
+---
+
+## Cost Function and Model Quality
+
+The cost function acts like a score.
+
+### Large Cost
+
+- predictions are far from actual values,
+- model performs poorly.
+
+### Small Cost
+
+- predictions are close to actual values,
+- model fits data well.
+
+---
+
+## Importance of the Cost Function
+
+Without the cost function:
+
+- the model would not know whether it is improving,
+- optimization would be impossible.
+
+The cost function provides the learning signal used during training.
 
 ---
 
 ## Key Insights
 
-- Cost function measures model error.
-- Squared error punishes large mistakes.
-- Lower cost means better predictions.
+- Cost function measures prediction error.
+- Squared error penalizes large mistakes heavily.
+- Lower cost means better model performance.
 - Convexity guarantees one global optimum.
 
 ---
 
 ## Common Mistakes
 
-- Forgetting to average over \(m\)
-- Confusing prediction function with cost function
+- Forgetting to average over $m$
+- Confusing hypothesis function with cost function
 - Thinking cost can become negative
 - Ignoring why errors are squared
+- Assuming lower training cost always means better generalization
 
 ---
 
 ## Implementation Perspective
 
-In NumPy:
+In practice:
 
 - predictions are computed as vectors,
 - errors are computed element-wise,
 - squaring and averaging are vectorized operations.
 
-Efficient vectorization becomes critical for large datasets.
+Using NumPy, the entire cost function can be computed efficiently without loops.
