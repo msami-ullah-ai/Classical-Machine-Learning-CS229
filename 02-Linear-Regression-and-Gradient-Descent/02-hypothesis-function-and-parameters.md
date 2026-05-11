@@ -6,7 +6,9 @@ The hypothesis function is the mathematical function used by Linear Regression t
 
 For a single feature:
 
-:contentReference[oaicite:1]{index=1}
+$$
+h_\theta(x)=\theta_0+\theta_1x
+$$
 
 This equation represents a straight line.
 
@@ -16,13 +18,15 @@ This equation represents a straight line.
 
 For multiple features:
 
-:contentReference[oaicite:2]{index=2}
+$$
+h_\theta(x)=\sum_{j=0}^{n}\theta_jx_j
+$$
 
 Expanded form:
 
-\[
+$$
 h_\theta(x)=\theta_0+\theta_1x_1+\theta_2x_2+\cdots+\theta_nx_n
-\]
+$$
 
 ---
 
@@ -30,11 +34,11 @@ h_\theta(x)=\theta_0+\theta_1x_1+\theta_2x_2+\cdots+\theta_nx_n
 
 The values:
 
-\[
-\theta_0,\theta_1,\theta_2,...,\theta_n
-\]
+$$
+\theta_0,\theta_1,\theta_2,\ldots,\theta_n
+$$
 
-are called **parameters** or **weights**.
+are called parameters or weights.
 
 They determine:
 
@@ -47,28 +51,41 @@ They determine:
 
 | Parameter | Purpose |
 |---|---|
-| \(\theta_0\) | Bias / intercept |
-| \(\theta_1\) | Weight of feature 1 |
-| \(\theta_2\) | Weight of feature 2 |
+| $\theta_0$ | Bias / intercept |
+| $\theta_1$ | Weight of feature 1 |
+| $\theta_2$ | Weight of feature 2 |
 | ... | ... |
 
 ---
 
-## Bias Term (\(\theta_0\))
+## Intuition Behind Weights
+
+Weights determine feature importance.
+
+Large positive weight:
+- strong positive effect
+
+Negative weight:
+- inverse relationship
+
+Weight near zero:
+- weak contribution
+
+---
+
+## Bias Term ($\theta_0$)
 
 The bias term is extremely important.
 
 Without bias:
 
-\[
+$$
 h_\theta(x)=\theta_1x
-\]
+$$
 
 the line is forced to pass through the origin.
 
 That reduces model flexibility.
-
-Adding bias allows the model to shift upward or downward for a better fit.
 
 ---
 
@@ -81,7 +98,7 @@ Even if:
 - house size = 0,
 - bedrooms = 0,
 
-there may still be a base price.
+there may still be some base price.
 
 The bias term captures this baseline value.
 
@@ -91,23 +108,23 @@ The bias term captures this baseline value.
 
 To simplify notation, we define:
 
-\[
+$$
 x_0=1
-\]
+$$
 
-Then the feature vector becomes:
+Now the feature vector becomes:
 
-\[
-x=[1,x_1,x_2,...,x_n]
-\]
+$$
+x=[1,x_1,x_2,\ldots,x_n]
+$$
+
+This allows bias to become part of the dot product.
 
 Now the hypothesis becomes:
 
-\[
+$$
 h_\theta(x)=\theta^Tx
-\]
-
-This compact form is heavily used in vectorized implementations.
+$$
 
 ---
 
@@ -115,9 +132,9 @@ This compact form is heavily used in vectorized implementations.
 
 Suppose:
 
-\[
+$$
 x=[1,2000,3]
-\]
+$$
 
 Where:
 
@@ -127,15 +144,15 @@ Where:
 
 And:
 
-\[
+$$
 \theta=[50,100,20]
-\]
+$$
 
 Prediction:
 
-\[
+$$
 h_\theta(x)=50+100(2000)+20(3)
-\]
+$$
 
 ---
 
@@ -143,16 +160,16 @@ h_\theta(x)=50+100(2000)+20(3)
 
 Each training example is represented as:
 
-\[
-(x^{(i)}, y^{(i)})
-\]
+$$
+(x^{(i)},y^{(i)})
+$$
 
 Example:
 
-| \(x^{(i)}\) | \(y^{(i)}\) |
+| $x^{(i)}$ | $y^{(i)}$ |
 |---|---|
-| [1, 1200, 2] | 180 |
-| [1, 2000, 4] | 350 |
+| [1,1200,2] | 180 |
+| [1,2000,4] | 350 |
 
 ---
 
@@ -160,8 +177,8 @@ Example:
 
 | Symbol | Meaning |
 |---|---|
-| \(m\) | Number of training examples |
-| \(n\) | Number of features |
+| $m$ | Number of training examples |
+| $n$ | Number of features |
 
 Important distinction:
 
@@ -170,45 +187,42 @@ Important distinction:
 
 ---
 
-## Intuition Behind Weights
+## Why Feature Representation Matters
 
-Weights determine how much each feature contributes to predictions.
+A good feature representation helps the model:
 
-Large positive weight:
-- strong positive influence
+- learn patterns more effectively,
+- make better predictions,
+- train faster.
 
-Negative weight:
-- inverse relationship
-
-Near zero:
-- weak influence
+Poor feature representation often leads to weak models.
 
 ---
 
 ## Key Insights
 
-- Parameters control model behavior.
-- Bias allows flexible fitting.
+- Parameters control predictions.
+- Bias improves flexibility.
 - Features are inputs to the model.
-- The hypothesis combines features linearly.
+- Hypothesis combines features linearly.
 
 ---
 
 ## Common Mistakes
 
-- Forgetting \(x_0 = 1\)
-- Mixing features and parameters
-- Assuming larger weight always means better feature
-- Ignoring the role of bias
+- Forgetting $x_0=1$
+- Mixing parameters with features
+- Ignoring the importance of bias
+- Misunderstanding weight interpretation
 
 ---
 
 ## Implementation Perspective
 
-In practice:
+In NumPy:
 
-- parameters are stored in vectors,
-- features are stored in matrices,
-- predictions are computed efficiently using dot products.
+- parameters are vectors,
+- features are matrices,
+- predictions are computed using dot products.
 
-Vectorization allows very fast computation for large datasets.
+Vectorization makes training very fast for large datasets.
