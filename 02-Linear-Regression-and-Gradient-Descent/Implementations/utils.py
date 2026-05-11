@@ -3,7 +3,6 @@ Utility Functions for Linear Regression
 
 Contains helper functions used across implementations.
 
-Author: Sami Ullah
 """
 
 import numpy as np
