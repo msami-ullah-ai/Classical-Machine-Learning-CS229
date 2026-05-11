@@ -10,7 +10,6 @@ Concepts implemented:
 - Gradient Descent
 - Vectorized Operations
 
-Author: Sami Ullah
 """
 
 import numpy as np
